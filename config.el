@@ -21,8 +21,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14 :weight 'bold)
-     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14)
+     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -40,7 +40,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Documents/org/")
+(setq org-directory "~/SyncThing/Org")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -77,7 +77,7 @@
 ;; User section
 ;; Avoid weirdness with scripts
 (setq shell-file-name (executable-find "bash"))
-;; Use my own shell for terminals 
+;; Use my own shell for terminals
 (setq-default vterm-shell "/run/current-system/sw/bin/fish")
 (setq-default explicit-shell-file-name "/run/current-system/sw/bin/fish")
 
@@ -93,3 +93,12 @@
   :commands calibredb calibredb-list calibredb-find-file calibredb-find-helm
   :config
   (setq calibredb-root-dir "~/Documents/Calibre Library"))
+
+(use-package! hass
+  :init
+)
+(setq hass-host "10.69.0.3")
+(setq hass-port 8123)
+(setq hass-insecure t)
+(setq hass-apikey (lambda () (f-read-text "~/.config/sops-nix/secrets/hass_cli_token")))
+(setq projectile-project-search-path '("~/Projects/" "~/Documents/" "~/code/" "~/Desktop/"))
