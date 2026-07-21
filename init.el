@@ -23,10 +23,10 @@
        :completion
        (company +childframe)           ; the ultimate code completion backend; Fox Nix
        ; (corfu +orderless +icons)  ; complete with cap(f), cape and a flying feather!
-       (helm +childframe +fuzzy +icons)             ; the *other* search engine for love and life ; Fox Nix
+       ; (helm +childframe +fuzzy +icons)             ; the *other* search engine for love and life ; Fox Nix
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
-       ; (vertico +icons +childframe)           ; the search engine of the future
+       (vertico +icons +childframe)           ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
