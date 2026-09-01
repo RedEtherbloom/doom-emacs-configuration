@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-tokyo-night)
+(setq doom-theme 'doom-feather-dark)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -97,7 +97,7 @@
 (use-package! hass
   :init
 )
-(setq hass-host "10.69.0.3")
+(setq hass-host "100.108.50.97")
 (setq hass-port 8123)
 (setq hass-insecure t)
 (setq hass-apikey (lambda () (f-read-text "~/.config/sops-nix/secrets/hass_cli_token")))
