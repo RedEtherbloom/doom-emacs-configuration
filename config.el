@@ -88,6 +88,8 @@
 ;; TODO: Hooks don't get triggerd
 ;; (setq-hook! 'rustic-mode-hook lsp-inlay-hints-enable true)
 (add-hook! 'rustic-mode-hook (setq lsp-inlay-hints-enable t))
+;; Hope this doesn't override companys hook
+(add-hook! 'nix-mode-hook :append ((setq lsp-nix-nil-formatter ["alejandra"])) (setq lsp-nix-nixd-formatting-command ["alejandra"]))
 
 (use-package! calibredb
   :commands calibredb calibredb-list calibredb-find-file calibredb-find-helm
