@@ -104,3 +104,10 @@
 (setq hass-insecure t)
 (setq hass-apikey (lambda () (f-read-text "~/.config/sops-nix/secrets/hass_cli_token")))
 (setq projectile-project-search-path '("~/Projects/" "~/Documents/" "~/code/" "~/Desktop/"))
+
+(use-package! piper-tts
+  :config
+  (piper-tts-define-profile tts-piper-libritts_r "Libritts R" "piper --sentence-silence 0.5 --noise-w-scale 0.6 --noise-scale 0.6 --length_scale 1.4 -s 355 --model ~/.local/state/piper/en_US-libritts_r-medium.onnx" "22050" "LibriTTS-R")
+  (setq piper-tts-player-args-format "-nodisp -autoexit -f s16le -ar %s -af \"highpass=f=40,lowpass=f=15000\" -") ;; Taken to remove missing -ac option
+  (setq piper-tts-default-profile 'tts-piper-libritts_r)
+  )
