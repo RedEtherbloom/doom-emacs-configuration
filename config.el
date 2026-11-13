@@ -32,7 +32,9 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-feather-dark)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(setq doom-theme 'doom-rouge)
+(setq doom-rouge-comment-bg t)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -89,8 +91,7 @@
 ;; (setq-hook! 'rustic-mode-hook lsp-inlay-hints-enable true)
 (add-hook! 'rustic-mode-hook (setq lsp-inlay-hints-enable t))
 ;; Hope this doesn't override companys hook
-(add-hook! 'nix-mode-hook :append ((setq lsp-nix-nil-formatter ["alejandra"])) (setq lsp-nix-nixd-formatting-command ["alejandra"]))
-
+(add-hook! '(nix-mode-hook nix-mode-ts-hook) :append (setq lsp-nix-nil-formatter ["alejandra"] lsp-nix-nixd-formatting-command ["alejandra"] lsp-nix-nixd-nixos-options-expr "(builtins.getFlake \"/home/inf/Projects/nix0s-config\").nixosConfigurations.neurodrive.options"))
 (use-package! calibredb
   :commands calibredb calibredb-list calibredb-find-file calibredb-find-helm
   :config
@@ -111,3 +112,24 @@
   (setq piper-tts-player-args-format "-nodisp -autoexit -f s16le -ar %s -af \"highpass=f=40,lowpass=f=15000\" -") ;; Taken to remove missing -ac option
   (setq piper-tts-default-profile 'tts-piper-libritts_r)
   )
+;; (("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox") "* [ ] %?
+;; %i
+;; %a" :prepend t) ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox") "* %u %?
+;; %i
+;; %a" :prepend t) ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file) "* %U %?
+;; %i
+;; %a" :prepend t) ("p" "Templates for projects") ("pt" "Project-local todo" entry (file+headline +org-capture-project-todo-file "Inbox") "* TODO %?
+;; %i
+;; %a" :prepend t) ("pn" "Project-local notes" entry (file+headline +org-capture-project-notes-file "Inbox") "* %U %?
+;; %i
+;; %a" :prepend t) ("pc" "Project-local changelog" entry (file+headline +org-capture-project-changelog-file "Unreleased") "* %U %?
+;; %i
+;; %a" :prepend t) ("o" "Centralized templates for projects") ("ot" "Project todo" entry #'+org-capture-central-project-todo-file "* TODO %?
+;;  %i
+;;  %a" :heading "Tasks" :prepend nil) ("on" "Project notes" entry #'+org-capture-central-project-notes-file "* %U %?
+;;  %i
+;;  %a" :heading "Notes" :prepend t) ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?
+;;  %i
+;;  %a" :heading "Changelog" :prepend t))
+;; Eval expresssion is under M-: by default, M-S-; in our case of Colemak
+;; Pasting of eval-expression should be under SPC-u M-S-; iirc
