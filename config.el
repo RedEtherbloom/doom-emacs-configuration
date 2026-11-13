@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 14)
-     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -85,11 +85,15 @@
 
 ;; TODO: Gets overwritten by others, sigh
 (setq-default tab-width 2)
-(setq-default indent-tabs-mode 's)
+(setq-default indent-tabs-mode t)
 
 ;; TODO: Hooks don't get triggerd
 ;; (setq-hook! 'rustic-mode-hook lsp-inlay-hints-enable true)
 (add-hook! 'rustic-mode-hook (setq lsp-inlay-hints-enable t))
+;; TODO: Translate this to map!
+;; (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
+;; TODO: Set indent-tabs-mode to nil. How do I force evil to also use spaces or tabs?
+;; TODO: Translate this to with-eval-after-load I think
 ;; Hope this doesn't override companys hook
 (add-hook! '(nix-mode-hook nix-mode-ts-hook) :append (setq lsp-nix-nil-formatter ["alejandra"] lsp-nix-nixd-formatting-command ["alejandra"] lsp-nix-nixd-nixos-options-expr "(builtins.getFlake \"/home/inf/Projects/nix0s-config\").nixosConfigurations.neurodrive.options"))
 (use-package! calibredb
@@ -99,18 +103,58 @@
 
 (use-package! hass
   :init
-)
+  )
 (setq hass-host "100.108.50.97")
 (setq hass-port 8123)
 (setq hass-insecure t)
 (setq hass-apikey (lambda () (f-read-text "~/.config/sops-nix/secrets/hass_cli_token")))
-(setq projectile-project-search-path '("~/Projects/" "~/Documents/" "~/code/" "~/Desktop/"))
+(setq projectile-project-search-path '("~/Projects/" "~/Desktop/"))
 
 (use-package! piper-tts
   :config
   (piper-tts-define-profile tts-piper-libritts_r "Libritts R" "piper --sentence-silence 0.5 --noise-w-scale 0.6 --noise-scale 0.6 --length_scale 1.4 -s 355 --model ~/.local/state/piper/en_US-libritts_r-medium.onnx" "22050" "LibriTTS-R")
-  (setq piper-tts-player-args-format "-nodisp -autoexit -f s16le -ar %s -af \"highpass=f=40,lowpass=f=15000\" -") ;; Taken to remove missing -ac option
-  (setq piper-tts-default-profile 'tts-piper-libritts_r)
+  ;; Taken to remove missing -ac option
+  (setq piper-tts-player-args-format "-nodisp -autoexit -f s16le -ar %s -af \"highpass=f=40,lowpass=f=15000\" -"  piper-tts-default-profile 'tts-piper-libritts_r)
+  )
+
+(with-eval-after-load 'gptel
+  (setq gptel-backend (gptel-make-openai-responses
+      "Astarion-LiteLLM"
+    :stream t
+    :protocol "http"
+    :host "100.74.165.55:4000"
+    :models '(
+              (chatgpt-gpt-6
+	       :capabilities (media tool-use json url responses-api)
+	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+	       :description "GPT-6 via astarion"
+	       :context-window 272
+	       )
+              (chatgpt-gpt-6.1-sol
+	       :capabilities (media tool-use json url responses-api)
+	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+	       :description "GPT-6.1-Sol. Flagship model. Expensive, but longer and deeper reasoning."
+	       :context-window 272
+	       :input-cost 5.0
+	       :output-cost 30.0
+	       )
+              (chatgpt-gpt-6.1-terra
+	       :capabilities (media tool-use json url responses-api)
+	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+	       :description "GPT-6.1-Terra. Balanced, good all-arounder. Okayish price"
+	       :context-window 272
+	       :input-cost 2.0
+	       :output-cost 12.0
+	       )
+              (chatgpt-gpt-6.1-luna
+	       :capabilities (media tool-use json url responses-api)
+	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+	       :description "GPT-6.1-Luna. Fast and affordable. Good for e.g. data entry tasks"
+	       :context-window 272
+	       :input-cost 0.2
+	       :output-cost 1.2
+	       )))
+  gptel-model 'chatgpt-gpt-6.1-terra)
   )
 ;; (("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox") "* [ ] %?
 ;; %i
