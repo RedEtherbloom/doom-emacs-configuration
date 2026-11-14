@@ -77,9 +77,7 @@
 ;; they are implemented.
 
 ;; User section
-;; Avoid weirdness with scripts
 (setq shell-file-name (executable-find "bash"))
-;; Use my own shell for terminals
 (setq-default vterm-shell "/run/current-system/sw/bin/fish")
 (setq-default explicit-shell-file-name "/run/current-system/sw/bin/fish")
 
@@ -87,15 +85,21 @@
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode t)
 
-;; TODO: Hooks don't get triggerd
-;; (setq-hook! 'rustic-mode-hook lsp-inlay-hints-enable true)
-(add-hook! 'rustic-mode-hook (setq lsp-inlay-hints-enable t))
+(setq projectile-project-search-path '("~/Projects/" "~/Desktop/"))
+
+(with-eval-after-load 'lsp-mode (setq lsp-inlay-hint-enable t))
 ;; TODO: Translate this to map!
 ;; (define-key evil-insert-state-map (kbd "TAB") 'tab-to-tab-stop)
 ;; TODO: Set indent-tabs-mode to nil. How do I force evil to also use spaces or tabs?
 ;; TODO: Translate this to with-eval-after-load I think
 ;; Hope this doesn't override companys hook
-(add-hook! '(nix-mode-hook nix-mode-ts-hook) :append (setq lsp-nix-nil-formatter ["alejandra"] lsp-nix-nixd-formatting-command ["alejandra"] lsp-nix-nixd-nixos-options-expr "(builtins.getFlake \"/home/inf/Projects/nix0s-config\").nixosConfigurations.neurodrive.options"))
+(with-eval-after-load 'lsp-nix
+  (setq lsp-nix-nil-formatter ["alejandra"]
+        lsp-nix-nixd-formatting-command ["alejandra"]
+        lsp-nix-nixd-nixos-options-expr
+        (format "(builtins.getFlake \"/home/%s/Projects/nix0s-config\").nixosConfigurations.%s.options"
+                (user-login-name)
+                (system-name))))
 (use-package! calibredb
   :commands calibredb calibredb-list calibredb-find-file calibredb-find-helm
   :config
@@ -118,7 +122,7 @@
   )
 
 (with-eval-after-load 'gptel
-  (setq gptel-backend (gptel-make-openai-responses
+  (setq gptel-backend (gptel-make-openai
       "Astarion-LiteLLM"
     :stream t
     :protocol "http"
