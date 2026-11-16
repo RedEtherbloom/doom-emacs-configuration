@@ -124,42 +124,42 @@
 
 (with-eval-after-load 'gptel
   (setq gptel-backend (gptel-make-openai
-      "Astarion-LiteLLM"
-    :stream t
-    :protocol "http"
-    :host "100.74.165.55:4000"
-    :models '(
-              (chatgpt-gpt-6
-	       :capabilities (media tool-use json url responses-api)
-	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-	       :description "GPT-6 via astarion"
-	       :context-window 272
-	       )
-              (chatgpt-gpt-6.1-sol
-	       :capabilities (media tool-use json url responses-api)
-	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-	       :description "GPT-6.1-Sol. Flagship model. Expensive, but longer and deeper reasoning."
-	       :context-window 272
-	       :input-cost 5.0
-	       :output-cost 30.0
-	       )
-              (chatgpt-gpt-6.1-terra
-	       :capabilities (media tool-use json url responses-api)
-	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-	       :description "GPT-6.1-Terra. Balanced, good all-arounder. Okayish price"
-	       :context-window 272
-	       :input-cost 2.0
-	       :output-cost 12.0
-	       )
-              (chatgpt-gpt-6.1-luna
-	       :capabilities (media tool-use json url responses-api)
-	       :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
-	       :description "GPT-6.1-Luna. Fast and affordable. Good for e.g. data entry tasks"
-	       :context-window 272
-	       :input-cost 0.2
-	       :output-cost 1.2
-	       )))
-  gptel-model 'chatgpt-gpt-6.1-terra)
+			  "Astarion-LiteLLM"
+			:stream t
+			:protocol "http"
+			:host "100.74.165.55:4000"
+			:models '(
+				  (chatgpt-gpt-6
+				   :capabilities (media tool-use json url responses-api)
+				   :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+				   :description "GPT-6 via astarion"
+				   :context-window 272
+				   )
+				  (chatgpt-gpt-6.1-sol
+				   :capabilities (media tool-use json url responses-api)
+				   :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+				   :description "GPT-6.1-Sol. Flagship model. Expensive, but longer and deeper reasoning."
+				   :context-window 272
+				   :input-cost 5.0
+				   :output-cost 30.0
+				   )
+				  (chatgpt-gpt-6.1-terra
+				   :capabilities (media tool-use json url responses-api)
+				   :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+				   :description "GPT-6.1-Terra. Balanced, good all-arounder. Okayish price"
+				   :context-window 272
+				   :input-cost 2.0
+				   :output-cost 12.0
+				   )
+				  (chatgpt-gpt-6.1-luna
+				   :capabilities (media tool-use json url responses-api)
+				   :mime-types ("image/jpeg" "image/png" "image/gif" "image/webp")
+				   :description "GPT-6.1-Luna. Fast and affordable. Good for e.g. data entry tasks"
+				   :context-window 272
+				   :input-cost 0.2
+				   :output-cost 1.2
+				   )))
+	gptel-model 'chatgpt-gpt-6.1-terra)
   )
 ;; (("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox") "* [ ] %?
 ;; %i
