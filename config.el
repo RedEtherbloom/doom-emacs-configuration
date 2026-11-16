@@ -108,10 +108,11 @@
 (use-package! hass
   :init
   )
-(setq hass-host "100.108.50.97")
-(setq hass-port 8123)
-(setq hass-insecure t)
-(setq hass-apikey (lambda () (f-read-text "~/.config/sops-nix/secrets/hass_cli_token")))
+(setq hass-host "homeassistant.tail83ad26.ts.net"
+      hass-port 8123
+      hass-insecure t
+      hass-apikey (lambda () (f-read-text "~/.config/sops-nix/secrets/hass_cli_token"))
+
 (setq projectile-project-search-path '("~/Projects/" "~/Desktop/"))
 
 (use-package! piper-tts
