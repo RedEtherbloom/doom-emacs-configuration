@@ -3,3 +3,4 @@
 (package! calibredb)
 (package! hass)
 (package! piper-tts :recipe '(:host codeberg :repo "Sshigeru/piper-tts.el" :branch "main"))
+(package! gptel-agent)
